@@ -5,13 +5,15 @@ type ImageProps = {
   alt: string;
   style?: object;
   onClick?: any;
+  className?: string;
 };
-const Image = ({ path, alt, onClick, style }: ImageProps) => (
+const Image = ({ path, alt, onClick, style, className }: ImageProps) => (
   <div onClick={onClick}>
     <img
       src={path}
       alt={alt}
       style={{ ...style }}
+      className={className}
     />
   </div>
 );

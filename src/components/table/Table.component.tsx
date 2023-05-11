@@ -13,7 +13,7 @@ import {
 // COMPONENTS
 import Image from "components/image/Image.component";
 import IsVisible from "components/is-visible/IsVisible.component";
-import ToolBar from "components/table/ToolBar.component";
+import ToolBar from "components/toolbar/ToolBar.component";
 // UTILITIES
 import { generateUUID } from "utilities";
 // IMAGES
@@ -27,7 +27,6 @@ type CTableType = {
   onSearchChange?: any;
   onSortChange?: any;
   text?: string;
-  updateList?: any;
 };
 
 function CTable({
@@ -38,7 +37,6 @@ function CTable({
   text,
   onSearchChange,
   onSortChange,
-  updateList,
 }: CTableType) {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -52,23 +50,22 @@ function CTable({
     setPage(0);
   };
 
-  // const visibleRows = React.useMemo(() => {
-  //   const bodyItemsCopy = [...bodyItems];
-  //   console.log(bodyItemsCopy);
-  //   const newList = bodyItemsCopy?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
-  //   console.log("NEWLISTTTTTTTT");
-  //   console.log(newList);
-  //   updateList(newList);
-  //   return newList;
-  // }, [page, rowsPerPage]);
+  const visibleRows = React.useMemo(() => {
+    const bodyItemsCopy = Object.assign([], bodyItems);
+    return bodyItemsCopy?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
+    // eslint-disable-next-line
+  }, [text, page, rowsPerPage, onSortChange]);
 
   return (
-    <TableContainer component={Paper}>
+    <TableContainer
+      component={Paper}
+      className="c-table"
+    >
       <ToolBar
         onFilterChange={onSearchChange}
         onSortChange={onSortChange}
         searchText={text}
-        listLength={bodyItems.length}
+        listLength={visibleRows.length}
       />
       <Table aria-label="simple table">
         <TableHead>
@@ -79,7 +76,7 @@ function CTable({
           </TableRow>
         </TableHead>
         <TableBody>
-          {bodyItems?.map((c: any) => {
+          {visibleRows?.map((c: any) => {
             return (
               <TableRow key={c.uuid}>
                 {headItems?.map((head: any) => {
@@ -88,19 +85,19 @@ function CTable({
                       <Image
                         path={c[head.label]}
                         alt={c[head.label]}
-                        style={{ height: 20, width: 30 }}
+                        className="c-table__icon"
                       />
                     </TableCell>
                   ) : (
                     <TableCell key={generateUUID()}>{c[head.label]}</TableCell>
                   );
                 })}
-                <IsVisible isVisible={hasRemoveBtn || false}>
+                <IsVisible isVisible={hasRemoveBtn!}>
                   <TableCell>
                     <Image
                       path={removeIcon}
                       alt="removeicon"
-                      style={{ height: 25, width: 25, cursor: "pointer" }}
+                      className="c-table__remove-icon"
                       onClick={(e: React.FormEvent<HTMLFormElement>) => onRemoveClick(e, c.uuid)}
                     />
                   </TableCell>
@@ -110,15 +107,15 @@ function CTable({
           })}
         </TableBody>
       </Table>
-      {/*<TablePagination*/}
-      {/*  rowsPerPageOptions={[5, 10, 25]}*/}
-      {/*  component="div"*/}
-      {/*  count={bodyItems?.length}*/}
-      {/*  rowsPerPage={rowsPerPage}*/}
-      {/*  page={page}*/}
-      {/*  onPageChange={handleChangePage}*/}
-      {/*  onRowsPerPageChange={handleChangeRowsPerPage}*/}
-      {/*/>*/}
+      <TablePagination
+        rowsPerPageOptions={[5, 10, 25]}
+        component="div"
+        count={bodyItems?.length}
+        rowsPerPage={rowsPerPage}
+        page={page}
+        onPageChange={handleChangePage}
+        onRowsPerPageChange={handleChangeRowsPerPage}
+      />
     </TableContainer>
   );
 }

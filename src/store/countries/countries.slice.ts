@@ -43,6 +43,7 @@ export const countriesSlice = createSlice({
     },
     getCountriesSuccessReducer: (state, { payload }: PayloadAction<CountriesState>) => {
       state.countriesList = payload.countriesList;
+      state.filteredCountriesList = payload.countriesList;
       state.isLoading = false;
     },
     getCountriesFailedReducer: (state, { payload }: PayloadAction<string>) => {
@@ -52,15 +53,6 @@ export const countriesSlice = createSlice({
     updateCountriesListReducer: (state, { payload }: PayloadAction<CountriesState>) => {
       state.filteredCountriesList = payload.countriesList;
     },
-    // filterCountriesListReducer: (state, { payload }: PayloadAction<any>) => {
-    //   console.log(payload);
-    //
-    //   const filteredUsers = state.countriesList!.filter((c: any) =>
-    //     c.country.toLowerCase().includes(payload.text.toLowerCase())
-    //   );
-    //   return { ...state, filteredCountriesList: filteredUsers };
-    //   // state.countriesList = payload.countriesList;
-    // },
   },
 });
 

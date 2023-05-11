@@ -6,10 +6,7 @@ import { Box, Grid } from "@mui/material";
 import LoaderWrapper from "components/loader-wrapper/LoaderWrapper.component";
 import CTable from "components/table/Table.component";
 // SLICES
-import {
-  selectCountries,
-  // updateCountriesListReducer
-} from "store/countries/countries.slice";
+import { selectCountries } from "store/countries/countries.slice";
 // ACTIONS
 import {
   getCountriesListAsync,
@@ -19,6 +16,8 @@ import {
 } from "store/countries/countries.actions";
 // STORE
 import { useAppDispatch } from "store";
+// UTILS
+import { headItems } from "views/countries-list/countries-list.utils";
 
 function CountriesList() {
   const [filterText, setFilterText] = useState<string>("");
@@ -31,14 +30,6 @@ function CountriesList() {
     dispatch(getCountriesListAsync());
     // eslint-disable-next-line
   }, []);
-
-  const headItems: any = [
-    { displayName: "country", label: "country" },
-    { displayName: "region", label: "region" },
-    { displayName: "population", label: "formattedPopulation" },
-    { displayName: "area", label: "formattedArea" },
-    { displayName: "flag", label: "flag", isIcon: true },
-  ];
 
   function removeCountryFromList(e: React.FormEvent<HTMLFormElement>, uuid: string) {
     e.preventDefault();
@@ -56,15 +47,11 @@ function CountriesList() {
     dispatch(sortByField(e.target.value, field, filteredCountriesList));
   }
 
-  // function updateCountriesList(list: any) {
-  //   dispatch(updateCountriesListReducer(list));
-  // }
-
   return (
-    <div className="App">
-      <h1 style={{ textAlign: "center" }}>Countries</h1>
-      <LoaderWrapper isLoading={isLoading || false}>
-        <Box sx={{ flexGrow: 1, display: "flex", justifyContent: "center" }}>
+    <div className="countries-list">
+      <h1>Countries</h1>
+      <LoaderWrapper isLoading={isLoading!}>
+        <Box className="countries-list__box">
           <Grid
             container
             item={true}
@@ -78,7 +65,6 @@ function CountriesList() {
               text={filterText}
               onSearchChange={filterCountries}
               onSortChange={onSortChange}
-              // updateList={updateCountriesList}  // for pagination
             />
           </Grid>
         </Box>

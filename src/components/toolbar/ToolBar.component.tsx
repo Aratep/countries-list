@@ -16,11 +16,15 @@ function ToolBar({ searchText, onFilterChange, onSortChange, listLength }: ToolB
       sx={{
         "& > :not(style)": { m: 1, width: "25ch" },
       }}
+      className="toolbar"
     >
       <Grid
         container
         item={true}
-        xs={8}
+        lg={8}
+        md={8}
+        sm={12}
+        xs={12}
       >
         <TextField
           label="Filter"
@@ -33,12 +37,18 @@ function ToolBar({ searchText, onFilterChange, onSortChange, listLength }: ToolB
       <Grid
         container
         item={true}
-        xs={8}
+        lg={8}
+        md={8}
+        sm={12}
+        xs={12}
       >
         <Grid
           container
           item={true}
-          xs={4}
+          lg={4}
+          md={4}
+          sm={12}
+          xs={12}
         >
           <TextField
             disabled={listLength === 0}
@@ -61,7 +71,10 @@ function ToolBar({ searchText, onFilterChange, onSortChange, listLength }: ToolB
         <Grid
           container
           item={true}
-          xs={4}
+          lg={4}
+          md={4}
+          sm={12}
+          xs={12}
         >
           <TextField
             disabled={listLength === 0}

@@ -28,11 +28,12 @@ export function formatCountrliesList(countries: any) {
 }
 
 export function sortAsc(arr: [], field: string) {
-  let newArr = [...arr];
+  let newArr = Object.assign([], arr);
   return newArr.sort((a: any, b: any) => Number(a[field]) - Number(b[field]));
 }
 
 export function sortDesc(arr: any, field: string) {
-  let newArr = [...arr];
+  let newArr = Object.assign([], arr);
+  console.log(newArr);
   return newArr.sort((a: any, b: any) => Number(b[field]) - Number(a[field]));
 }

@@ -1,0 +1,10 @@
+.countries-list {
+  h1 {
+    text-align: center;
+  }
+  &__box {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+  }
+}
